@@ -77,6 +77,8 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'Valloric/YouCompleteMe'  " Auto complete
 Plugin 'flazz/vim-colorschemes'
 Plugin 'scrooloose/nerdtree'     " Folder Navigation
+Plugin 'vim-syntastic/syntastic'  " Syntax checker
+Plugin 'nvie/vim-flake8'         " Pep8
 
 call vundle#end()
 
@@ -90,6 +92,19 @@ if filereadable("/etc/vim/vimrc.local")
   source /etc/vim/vimrc.local
 endif
 
+"-----------------Flake8----------------
+let g:flake8_show_in_gutter=1  " Show signs in the gutter 
+let g:flake8_show_in_file=1  " Show markers in file
+" let g:flake8_show_quickfix=1  " Show quick fix window
+
+" Auto run flake8
+autocmd BufWritePost *.py call Flake8()
+
+
+"-----------------Syntastic---------------------------
+let g:syntastic_check_on_open=1
+let g:syntastic_enable_signs=1
+let g:syntastic_python_checkers = ['pycodestyle']
 
 "----------Added for highlighting extra spaces--------------
 let c_space_errors = 1
@@ -118,6 +133,7 @@ set t_ZR=[23m
 
 syntax enable
 set background=dark
+set term=screen-256color
 colorscheme badwolf
 highlight ColorColumn ctermbg=grey
 
@@ -348,3 +364,10 @@ let g:multi_cursor_quit_key            = '<Esc>'
 "-------- Show signcolum always -----
 set signcolumn=yes
 autocmd FileType tagbar,nerdtree setlocal signcolumn=no
+
+
+"-------- Remap the commands to io ops to clipboard
+nnoremap <C-y> "+y
+vnoremap <C-y> "+y
+nnoremap <C-p> "+gP
+vnoremap <C-p> "+gP

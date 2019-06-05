@@ -79,6 +79,7 @@ Plugin 'flazz/vim-colorschemes'
 Plugin 'scrooloose/nerdtree'     " Folder Navigation
 Plugin 'vim-syntastic/syntastic'  " Syntax checker
 Plugin 'nvie/vim-flake8'         " Pep8
+" Plugin 'dracula/vim'  " Dracula theme
 
 call vundle#end()
 
@@ -102,9 +103,10 @@ autocmd BufWritePost *.py call Flake8()
 
 
 "-----------------Syntastic---------------------------
-let g:syntastic_check_on_open=1
+let g:syntastic_check_on_open=0
 let g:syntastic_enable_signs=1
 let g:syntastic_python_checkers = ['pycodestyle']
+let g:syntastic_python_flake8_args='--ignore=,E501'
 
 "----------Added for highlighting extra spaces--------------
 let c_space_errors = 1
@@ -118,27 +120,27 @@ hi clear SpellBad
 hi SpellBad cterm=underline ctermfg=red
 
 "--------------Added for Color scheme----------------
-let g:solarized_termcolors=16 | 256
-let g:solarized_termtrans=0 | 1
-let g:solarized_degrade=0 | 1
-let g:solarized_bold=1 | 0
-let g:solarized_underline=1 | 0
-let g:solarized_italic=1 | 0
-let g:solarized_contrast="high" | "high" or "low"
-let g:solarized_visibility="normal" | "high" or "low"
+" let g:solarized_termcolors=16 | 256
+" let g:solarized_termtrans=0 | 1
+" let g:solarized_degrade=0 | 1
+" let g:solarized_bold=1 | 0
+" let g:solarized_underline=1 | 0
+" let g:solarized_italic=1 | 0
+" let g:solarized_contrast="high" | "high" or "low"
+" let g:solarized_visibility="normal" | "high" or "low"
 
 "---For Italic fonts-----
 set t_ZH=[3m
 set t_ZR=[23m
 
 syntax enable
-set background=dark
+" set background=dark
 set term=screen-256color
-colorscheme badwolf
+colorscheme molokai
 highlight ColorColumn ctermbg=grey
 
 "----- For Syntastic ------
-let g:syntastic_python_checkers = ['pylint']
+" let g:syntastic_python_checkers = ['pylint']
 
 "----- Indent line highlighting ------
 let g:indentLine_color_term = 239
@@ -217,9 +219,12 @@ autocmd BufRead,BufNewFile *.cpp,*.h setlocal foldlevelstart=1
 autocmd BufRead,BufNewFile *.cpp,*.h setlocal colorcolumn=100
 autocmd BufRead,BufNewFile *.cpp,*.h setlocal cindent
 "autocmd BufRead,BufNewFile *.cpp setlocal foldnestmax=2
-"set foldmethod=syntax
-"set foldlevelstart=1
-set foldnestmax=2
+"
+"------------------- For py folding -----------
+set foldmethod=indent   
+set foldnestmax=3
+" set nofoldenable
+set foldlevel=1
 
 "------- Shortcut for folding and unfolding ----------
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
